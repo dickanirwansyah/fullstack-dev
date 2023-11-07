@@ -1,0 +1,121 @@
+<div class="container" style="margin-top: 20px;">
+     <button type="button" class="btn btn-primary" (click)="open(content_form)"
+          style="margin-bottom: 10px;">Add</button>
+     <table class="table table-hover table-striped">
+          <thead>
+               <tr>
+                    <th>No.</th>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Roles</th>
+                    <th>Address</th>
+                    <th>Action</th>
+               </tr>
+          </thead>
+          <tbody>
+               <tr *ngFor="let account of accounts; let i = index">
+                    <td>{{i + 1}}</td>
+                    <td>{{account.id}}</td>
+                    <td>{{account.name}}</td>
+                    <td>{{account.email}}</td>
+                    <td>{{account.phoneNumber}}</td>
+                    <td>{{account.roles}}</td>
+                    <td>{{account.address}}</td>
+                    <td>
+                         <button type="button" (click)="detail(account.id, content_form)" class="btn btn-primary">Edit</button>&nbsp;
+                         <button type="button" class="btn btn-danger">Delete</button>
+                    </td>
+               </tr>
+          </tbody>
+     </table>
+     <ngb-pagination [collectionSize]="totalElements"
+     [(page)]="page"
+     [pageSize]="size"
+     [boundaryLinks]="true"
+     [rotate]="true"
+     (pageChange)="nextPage($event)"
+     >
+     </ngb-pagination>
+</div>
+
+<!--form insert/edit-->
+<ng-template #content_form let-modal>
+     <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Manage Accounts</h4>
+          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+     </div>
+     <div class="modal-body">
+          <div *ngIf="isEdit">
+               <form [formGroup]="accountsForm">
+                    <div class="form-group">
+                         <input type="text" formControlName="id" class="form-control" placeholder="id">
+                    </div>
+                    <div class="form-group">
+                         <input type="text" formControlName="name" class="form-control" placeholder="name" />
+                    </div>
+                    <div class="form-group">
+                         <input type="text" formControlName="email" class="form-control" placeholder="email">
+                    </div>
+                    <div class="form-group">
+                         <input type="text" formControlName="phoneNumber" class="form-control" placeholder="phone number">
+                    </div>
+                    <div class="form-group">
+                         <input type="text" formControlName="username" class="form-control" placeholder="username">
+                    </div>
+                    <div class="form-group">
+                         <select class="form-control" formControlName="roles">
+                              <option value="">Choose</option>
+                              <option value="ADMIN">Admin</option>
+                              <option value="AGENT">Agent</option>
+                         </select>
+                    </div>
+                    <div class="form-group">
+                         <textarea type="text" formControlName="address" class="form-control"
+                              placeholder="address"></textarea>
+                    </div>
+                    <div class="form-group" style="margin-left: 160px;">
+                         <button type="button" class="btn btn-primary" (click)="modal.dismiss() || update()">Save</button>
+                         &nbsp;
+                         <button type="button" class="btn btn-danger" (click)="modal.dismiss()">Cancel</button>
+                    </div>
+               </form>
+          </div>
+          <div *ngIf="!isEdit">
+               <form [formGroup]="accountsForm">
+                    <div class="form-group">
+                         <input type="text" formControlName="name" class="form-control" placeholder="name" />
+                    </div>
+                    <div class="form-group">
+                         <input type="text" formControlName="email" class="form-control" placeholder="email">
+                    </div>
+                    <div class="form-group">
+                         <input type="text" formControlName="phoneNumber" class="form-control" placeholder="phone number">
+                    </div>
+                    <div class="form-group">
+                         <input type="text" formControlName="username" class="form-control" placeholder="username">
+                    </div>
+                    <div class="form-group">
+                         <select class="form-control" formControlName="roles">
+                              <option value="">Choose</option>
+                              <option value="ADMIN">Admin</option>
+                              <option value="AGENT">Agent</option>
+                         </select>
+                    </div>
+                    <div class="form-group">
+                         <input type="password" formControlName="password" class="form-control" placeholder="password">
+                    </div>
+                    <div class="form-group">
+                         <textarea type="text" formControlName="address" class="form-control"
+                              placeholder="address"></textarea>
+                    </div>
+                    <div class="form-group" style="margin-left: 160px;">
+                         <button type="button" class="btn btn-primary" (click)="modal.dismiss() || save()">Save</button>
+                         &nbsp;
+                         <button type="button" class="btn btn-danger" (click)="modal.dismiss()">Cancel</button>
+                    </div>
+               </form>
+          </div>
+     </div>
+</ng-template>
